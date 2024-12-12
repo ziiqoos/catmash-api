@@ -10,6 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/cats', catRoutes);
 
+
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to catmash-api!' });
 });
