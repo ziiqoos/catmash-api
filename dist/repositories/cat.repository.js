@@ -29,17 +29,6 @@ class CatRepository {
             return query.exec();
         });
     }
-    createCat(catData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const cat = new cat_model_1.default(catData);
-            return yield cat.save();
-        });
-    }
-    updateCat(id, updates) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield cat_model_1.default.findByIdAndUpdate(id, updates, { new: true }).exec();
-        });
-    }
     upvoteCatById(catId) {
         return __awaiter(this, void 0, void 0, function* () {
             return cat_model_1.default.findOneAndUpdate({ id: catId }, { $inc: { score: 1 } }, { new: true });

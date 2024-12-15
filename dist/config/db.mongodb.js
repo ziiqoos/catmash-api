@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connect = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const logger_1 = require("../utils/logger");
 dotenv_1.default.config();
 const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 // Validate that all necessary environment variables are present
@@ -23,14 +24,15 @@ if (!DB_USERNAME || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
 }
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
+        const uri = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
         yield mongoose_1.default.connect(uri, {});
         console.log('Successfully connected to :', uri);
+        logger_1.logger.info(`Successfully connected to DB`);
     }
     catch (error) {
         console.error('Database connection failed. Exiting now...');
         console.error(error);
-        process.exit(1);
+        logger_1.logger.info(`Database connection failed : ${error}`);
     }
 });
 exports.connect = connect;

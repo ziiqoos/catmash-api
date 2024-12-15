@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CatController = void 0;
 const cat_service_1 = require("../services/cat.service");
 const db_mongodb_1 = require("../config/db.mongodb");
+const logger_1 = require("../utils/logger");
 class CatController {
     constructor() {
         (0, db_mongodb_1.connect)();
@@ -22,13 +23,17 @@ class CatController {
             try {
                 const cat = yield this.catService.getCatById(req.params.id);
                 if (!cat) {
+                    logger_1.logger.httpError('GET', `/api/cats/${req.params.id}`, 'N/A', 404, 'Entity not found');
                     res.status(404).json({ message: 'Cat not found' });
                 }
                 else {
+                    logger_1.logger.httpInfo('GET', `/api/cats/${req.params.id}`, 'N/A', 200);
                     res.status(200).json(cat);
                 }
             }
-            catch (error) {
+            catch (err) {
+                const error = err;
+                logger_1.logger.httpError('GET', `/api/cats/${req.params.id}`, 'N/A', 500, error.message);
                 res.status(500).json({ error: error.message });
             }
         });
@@ -39,36 +44,12 @@ class CatController {
                 const { sort } = req.query;
                 const sortOrder = sort === 'desc' ? -1 : sort === 'asc' ? 1 : undefined;
                 const cats = yield this.catService.getAllCats(sortOrder);
+                logger_1.logger.httpInfo('GET', `/api/cats`, 'N/A', 200);
                 res.status(200).json(cats);
             }
-            catch (error) {
-                res.status(500).json({ error: error.message });
-            }
-        });
-    }
-    createCat(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const cat = yield this.catService.createCat(req.body);
-                res.status(201).json(cat);
-            }
-            catch (error) {
-                res.status(500).json({ error: error.message });
-            }
-        });
-    }
-    updateCat(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const updatedCat = yield this.catService.updateCat(req.params.id, req.body);
-                if (!updatedCat) {
-                    res.status(404).json({ message: 'Cat not found' });
-                }
-                else {
-                    res.status(200).json(updatedCat);
-                }
-            }
-            catch (error) {
+            catch (err) {
+                const error = err;
+                logger_1.logger.httpInfo('GET', `/api/cats`, 'N/A', 500);
                 res.status(500).json({ error: error.message });
             }
         });
@@ -78,14 +59,18 @@ class CatController {
             const { catId } = req.params;
             try {
                 const updatedCat = yield this.catService.upvoteCat(catId);
+                logger_1.logger.httpInfo('PATCH', `/api/cats/${catId}`, 'N/A', 200);
                 res.status(200).json({ message: "Cat upvoted successfully", data: updatedCat });
             }
-            catch (error) {
+            catch (err) {
+                const error = err;
                 if (error.message === "Cat not found") {
+                    logger_1.logger.httpError('PATCH', `/api/cats/${catId}`, 'N/A', 404, error.message);
                     res.status(404).json({ message: "Cat not found" });
                 }
                 else {
                     console.error("Error upvoting the cat:", error);
+                    logger_1.logger.httpError('PATCH', `/api/cats/${catId}`, 'N/A', 500, error.message);
                     res.status(500).json({ message: "Internal server error", error: error.message });
                 }
             }

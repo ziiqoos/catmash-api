@@ -25,16 +25,6 @@ class CatService {
             return this.catRepository.getAllCats(sortOrder);
         });
     }
-    createCat(catData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.catRepository.createCat(catData);
-        });
-    }
-    updateCat(id, updates) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.catRepository.updateCat(id, updates);
-        });
-    }
     upvoteCat(catId) {
         return __awaiter(this, void 0, void 0, function* () {
             const updatedCat = yield this.catRepository.upvoteCatById(catId);
