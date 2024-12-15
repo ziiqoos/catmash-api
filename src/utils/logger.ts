@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
 enum LogLevel {
   INFO = 'info',
@@ -7,13 +9,16 @@ enum LogLevel {
 }
 
 class Logger {
-  private logFilePath: string;
+  private logFilePath: string = '';
+  private genLogs = process.env.GEN_LOGS;
 
   constructor(logDir: string = 'logs') {
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir);
+    if (this.genLogs) {
+      if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir);
+      }
+      this.logFilePath = path.join(logDir, 'app.log');
     }
-    this.logFilePath = path.join(logDir, 'app.log');
   }
 
   private writeToFile(message: string): void {
@@ -28,7 +33,11 @@ class Logger {
   private log(level: LogLevel, message: string): void {
     const timestamp = new Date().toISOString();
     const formattedMessage = `${timestamp} [${level.toUpperCase()}]: ${message}`;
-    this.writeToFile(formattedMessage);
+    if (this.genLogs) {
+      this.writeToFile(formattedMessage);
+    } else {
+      console.log(formattedMessage)
+    }
   }
 
   info(message: string): void {

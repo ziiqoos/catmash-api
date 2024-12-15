@@ -32,10 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logger = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 var LogLevel;
 (function (LogLevel) {
     LogLevel["INFO"] = "info";
@@ -43,10 +48,14 @@ var LogLevel;
 })(LogLevel || (LogLevel = {}));
 class Logger {
     constructor(logDir = 'logs') {
-        if (!fs.existsSync(logDir)) {
-            fs.mkdirSync(logDir);
+        this.logFilePath = '';
+        this.genLogs = process.env.GEN_LOGS;
+        if (this.genLogs) {
+            if (!fs.existsSync(logDir)) {
+                fs.mkdirSync(logDir);
+            }
+            this.logFilePath = path.join(logDir, 'app.log');
         }
-        this.logFilePath = path.join(logDir, 'app.log');
     }
     writeToFile(message) {
         const logMessage = `${message}\n`;
@@ -59,7 +68,12 @@ class Logger {
     log(level, message) {
         const timestamp = new Date().toISOString();
         const formattedMessage = `${timestamp} [${level.toUpperCase()}]: ${message}`;
-        this.writeToFile(formattedMessage);
+        if (this.genLogs) {
+            this.writeToFile(formattedMessage);
+        }
+        else {
+            console.log(formattedMessage);
+        }
     }
     info(message) {
         this.log(LogLevel.INFO, message);
