@@ -14,15 +14,6 @@ export class CatRepository {
     return query.exec();
   }
 
-  async createCat(catData: Partial<ICat>): Promise<ICat> {
-    const cat = new CatModel(catData);
-    return await cat.save();
-  }
-
-  async updateCat(id: string, updates: Partial<ICat>): Promise<ICat | null> {
-    return await CatModel.findByIdAndUpdate(id, updates, { new: true }).exec();
-  }
-
   async upvoteCatById(catId: string): Promise<ICat | null> {
     return CatModel.findOneAndUpdate(
       { id: catId },
