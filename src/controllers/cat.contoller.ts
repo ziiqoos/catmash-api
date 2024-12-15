@@ -1,5 +1,6 @@
 import { CatService } from '../services/cat.service';
 import { connect } from '../config/db.mongodb';
+import { logger } from '../utils/logger';
 import { Request, Response } from 'express';
 export class CatController {
   private catService: CatService;
@@ -14,11 +15,15 @@ export class CatController {
     try {
       const cat = await this.catService.getCatById(req.params.id);
       if (!cat) {
+        logger.httpError('GET', `/api/cats/${req.params.id}`, 'N/A', 404, 'Entity not found');
         res.status(404).json({ message: 'Cat not found' });
       } else {
+        logger.httpInfo('GET', `/api/cats/${req.params.id}`, 'N/A', 200);
         res.status(200).json(cat);
       }
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as Error;
+      logger.httpError('GET', `/api/cats/${req.params.id}`, 'N/A', 500, error.message);
       res.status(500).json({ error: error.message });
     }
   }
@@ -29,30 +34,11 @@ export class CatController {
       const sortOrder = sort === 'desc' ? -1 : sort === 'asc' ? 1 : undefined;
 
       const cats = await this.catService.getAllCats(sortOrder);
+      logger.httpInfo('GET', `/api/cats`, 'N/A', 200);
       res.status(200).json(cats);
-    } catch (error:any) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-
-  async createCat(req: Request, res: Response): Promise<void> {
-    try {
-      const cat = await this.catService.createCat(req.body);
-      res.status(201).json(cat);
-    } catch (error:any) {
-      res.status(500).json({ error: error.message });
-    }
-  }
-
-  async updateCat(req: Request, res: Response): Promise<void> {
-    try {
-      const updatedCat = await this.catService.updateCat(req.params.id, req.body);
-      if (!updatedCat) {
-        res.status(404).json({ message: 'Cat not found' });
-      } else {
-        res.status(200).json(updatedCat);
-      }
-    } catch (error:any) {
+    } catch (err) {
+      const error = err as Error;
+      logger.httpInfo('GET', `/api/cats`, 'N/A', 500);
       res.status(500).json({ error: error.message });
     }
   }
@@ -62,13 +48,17 @@ export class CatController {
 
     try {
       const updatedCat = await this.catService.upvoteCat(catId);
+      logger.httpInfo('PATCH', `/api/cats/${catId}`, 'N/A', 200);
 
       res.status(200).json({ message: "Cat upvoted successfully", data: updatedCat });
-    } catch (error:any) {
+    } catch (err) {
+      const error = err as Error;
       if (error.message === "Cat not found") {
+        logger.httpError('PATCH', `/api/cats/${catId}`, 'N/A', 404, error.message);
         res.status(404).json({ message: "Cat not found" });
       } else {
         console.error("Error upvoting the cat:", error);
+        logger.httpError('PATCH', `/api/cats/${catId}`, 'N/A', 500, error.message);
         res.status(500).json({ message: "Internal server error", error: error.message });
       }
     }
