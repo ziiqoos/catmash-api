@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import catRoutes from './routes/cat.routes';
 import cors from 'cors';
 import express from 'express';
- 
+import { logger } from './utils/logger';
 
 const app = express();
 app.use(cors());
@@ -20,8 +20,15 @@ app.get('/api', (req, res) => {
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/api`);
+  logger.info('Application start');
 });
-server.on('error', console.error);
+
+// Log the server errors
+server.on('error', (error) => {
+  console.log(error)
+  logger.error(`An error occured : ${error}`);
+});
+
 
 export default app;
 
