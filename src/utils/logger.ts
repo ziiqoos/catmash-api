@@ -12,7 +12,8 @@ class Logger {
   private logFilePath: string = '';
   private genLogs = process.env.GEN_LOGS;
 
-  constructor(logDir: string = 'logs') {
+  constructor(logDir: string = 'tmp/logs') {
+    console.log('this.genLogs',this.genLogs);
     if (this.genLogs) {
       if (!fs.existsSync(logDir)) {
         fs.mkdirSync(logDir);
