@@ -24,7 +24,7 @@ if (!DB_USERNAME || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
 }
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
+        const uri = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
         yield mongoose_1.default.connect(uri, {});
         console.log('Successfully connected to :', uri);
         logger_1.logger.info(`Successfully connected to DB`);

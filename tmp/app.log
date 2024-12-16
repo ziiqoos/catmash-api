@@ -1,10 +1,10 @@
-2024-12-15T23:53:37.878Z [INFO]: Request: PATCH /api/cats/cgp | Body: N/A | Status: 200
-2024-12-15T23:53:38.592Z [INFO]: Request: PATCH /api/cats/93m | Body: N/A | Status: 200
-2024-12-15T23:53:40.319Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
-2024-12-15T23:53:57.956Z [INFO]: Application start
-2024-12-15T23:53:58.058Z [INFO]: Successfully connected to DB
-2024-12-15T23:54:09.555Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
-2024-12-15T23:54:10.354Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
-2024-12-15T23:54:12.018Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
-2024-12-15T23:54:12.304Z [INFO]: Request: PATCH /api/cats/4lt | Body: N/A | Status: 200
-2024-12-15T23:54:13.018Z [INFO]: Request: PATCH /api/cats/99t | Body: N/A | Status: 200
+2024-12-16T00:19:20.622Z [INFO]: Application start
+2024-12-16T00:19:20.695Z [INFO]: Successfully connected to DB
+2024-12-16T00:19:30.411Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
+2024-12-16T00:19:33.302Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
+2024-12-16T00:19:47.590Z [INFO]: Request: GET /api/cats/tt | Body: N/A | Status: 200
+2024-12-16T00:20:36.339Z [INFO]: Application start
+2024-12-16T00:20:36.373Z [INFO]: Database connection failed : Error: querySrv ENOTFOUND _mongodb._tcp.localhost
+2024-12-16T00:22:12.501Z [INFO]: Application start
+2024-12-16T00:22:12.713Z [INFO]: Successfully connected to DB
+2024-12-16T00:24:58.893Z [INFO]: Request: GET /api/cats | Body: N/A | Status: 200
