@@ -12,7 +12,7 @@ class Logger {
   private logFilePath: string = '';
   private genLogs = process.env.GEN_LOGS;
 
-  constructor(logDir: string = '/tmp') {
+  constructor(logDir: string = 'tmp') {
     if (this.genLogs) {
       this.logFilePath = path.join(logDir, 'app.log');
     }
@@ -56,4 +56,4 @@ class Logger {
   }
 }
 
-export const logger = new Logger('logs');
+export const logger = new Logger('tmp');

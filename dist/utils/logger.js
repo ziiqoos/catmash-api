@@ -47,7 +47,7 @@ var LogLevel;
     LogLevel["ERROR"] = "error";
 })(LogLevel || (LogLevel = {}));
 class Logger {
-    constructor(logDir = '/tmp') {
+    constructor(logDir = 'tmp') {
         this.logFilePath = '';
         this.genLogs = process.env.GEN_LOGS;
         if (this.genLogs) {
@@ -87,4 +87,4 @@ class Logger {
         this.log(LogLevel.INFO, message);
     }
 }
-exports.logger = new Logger('logs');
+exports.logger = new Logger('tmp');
