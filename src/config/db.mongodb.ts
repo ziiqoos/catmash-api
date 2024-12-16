@@ -13,7 +13,7 @@ if (!DB_USERNAME || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
 
 export const connect = async (): Promise<void> => {
   try {
-    const uri = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
+    const uri = `mongodb+svr://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
     await mongoose.connect(uri, {});
 
     console.log('Successfully connected to :', uri);

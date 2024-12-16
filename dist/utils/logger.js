@@ -51,9 +51,6 @@ class Logger {
         this.logFilePath = '';
         this.genLogs = process.env.GEN_LOGS;
         if (this.genLogs) {
-            // if (!fs.existsSync(logDir)) {
-            //   fs.mkdirSync(logDir);
-            // }
             this.logFilePath = path.join(logDir, 'app.log');
         }
     }

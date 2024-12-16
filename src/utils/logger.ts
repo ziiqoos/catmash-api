@@ -14,9 +14,6 @@ class Logger {
 
   constructor(logDir: string = '/tmp') {
     if (this.genLogs) {
-      // if (!fs.existsSync(logDir)) {
-      //   fs.mkdirSync(logDir);
-      // }
       this.logFilePath = path.join(logDir, 'app.log');
     }
   }
