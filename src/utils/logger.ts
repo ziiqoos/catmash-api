@@ -12,11 +12,11 @@ class Logger {
   private logFilePath: string = '';
   private genLogs = process.env.GEN_LOGS;
 
-  constructor(logDir: string = '/tmp/logs') {
+  constructor(logDir: string = '/tmp') {
     if (this.genLogs) {
-      if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir);
-      }
+      // if (!fs.existsSync(logDir)) {
+      //   fs.mkdirSync(logDir);
+      // }
       this.logFilePath = path.join(logDir, 'app.log');
     }
   }
