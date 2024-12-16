@@ -47,10 +47,9 @@ var LogLevel;
     LogLevel["ERROR"] = "error";
 })(LogLevel || (LogLevel = {}));
 class Logger {
-    constructor(logDir = 'tmp/logs') {
+    constructor(logDir = '/tmp/logs') {
         this.logFilePath = '';
         this.genLogs = process.env.GEN_LOGS;
-        console.log('this.genLogs', this.genLogs);
         if (this.genLogs) {
             if (!fs.existsSync(logDir)) {
                 fs.mkdirSync(logDir);
