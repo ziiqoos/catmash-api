@@ -10,19 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CatService = void 0;
-const cat_repository_1 = require("../repositories/cat.repository");
+const cat_repository_dynamodb_1 = require("../repositories/cat.repository.dynamodb");
 class CatService {
     constructor() {
-        this.catRepository = new cat_repository_1.CatRepository();
+        this.catRepository = new cat_repository_dynamodb_1.CatRepository();
     }
     getCatById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.catRepository.getCatById(id);
         });
     }
-    getAllCats(sortOrder) {
+    getAllCats() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.catRepository.getAllCats(sortOrder);
+            return this.catRepository.getAllCats();
         });
     }
     upvoteCat(catId) {

@@ -17,21 +17,17 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const logger_1 = require("../utils/logger");
 dotenv_1.default.config();
-const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
+const { MONGODB_URI } = process.env;
 // Validate that all necessary environment variables are present
-if (!DB_USERNAME || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
+if (!MONGODB_URI) {
     throw new Error('Missing required environment variables for database connection.');
 }
 const connect = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const uri = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?authSource=admin`;
-        yield mongoose_1.default.connect(uri, {});
-        console.log('Successfully connected to :', uri);
+        yield mongoose_1.default.connect(MONGODB_URI, {});
         logger_1.logger.info(`Successfully connected to DB`);
     }
     catch (error) {
-        console.error('Database connection failed. Exiting now...');
-        console.error(error);
         logger_1.logger.info(`Database connection failed : ${error}`);
     }
 });

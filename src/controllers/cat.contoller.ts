@@ -1,12 +1,11 @@
 import { CatService } from '../services/cat.service';
-import { connect } from '../config/db.mongodb';
+import { ICat } from '../models/cat.model';
 import { logger } from '../utils/logger';
 import { Request, Response } from 'express';
 export class CatController {
   private catService: CatService;
 
   constructor() {
-    connect();
     this.catService = new CatService();
   }
 
@@ -31,9 +30,9 @@ export class CatController {
   async getAllCats(req: Request, res: Response): Promise<void> {
     try {
       const { sort } = req.query;
-      const sortOrder = sort === 'desc' ? -1 : sort === 'asc' ? 1 : undefined;
 
-      const cats = await this.catService.getAllCats(sortOrder);
+      const cats = (await this.catService.getAllCats())
+        .sort((a: ICat, b: ICat) => sort === 'asc' ? a.score - b.score : b.score - a.score);
       logger.httpInfo('GET', `/api/cats`, 'N/A', 200);
       res.status(200).json(cats);
     } catch (err) {

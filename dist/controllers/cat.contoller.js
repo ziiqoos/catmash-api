@@ -11,11 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CatController = void 0;
 const cat_service_1 = require("../services/cat.service");
-const db_mongodb_1 = require("../config/db.mongodb");
 const logger_1 = require("../utils/logger");
 class CatController {
     constructor() {
-        (0, db_mongodb_1.connect)();
         this.catService = new cat_service_1.CatService();
     }
     getCatById(req, res) {
@@ -42,8 +40,8 @@ class CatController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { sort } = req.query;
-                const sortOrder = sort === 'desc' ? -1 : sort === 'asc' ? 1 : undefined;
-                const cats = yield this.catService.getAllCats(sortOrder);
+                const cats = (yield this.catService.getAllCats())
+                    .sort((a, b) => sort === 'asc' ? a.score - b.score : b.score - a.score);
                 logger_1.logger.httpInfo('GET', `/api/cats`, 'N/A', 200);
                 res.status(200).json(cats);
             }

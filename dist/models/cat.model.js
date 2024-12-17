@@ -41,6 +41,5 @@ const CatSchema = new mongoose_1.Schema({
 }, {
     collection: 'cats'
 });
-// Export the Mongoose model
 const Cat = mongoose_1.default.model('Cat', CatSchema);
 exports.default = Cat;

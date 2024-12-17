@@ -1,4 +1,4 @@
-import { CatRepository } from '../repositories/cat.repository';
+import { CatRepository } from '../repositories/cat.repository.dynamodb';
 import { ICat } from '../models/cat.model';
 
 export class CatService {
@@ -12,8 +12,8 @@ export class CatService {
     return this.catRepository.getCatById(id);
   }
 
-  async getAllCats(sortOrder?: 1 | -1): Promise<ICat[]> {
-    return this.catRepository.getAllCats(sortOrder);
+  async getAllCats(): Promise<ICat[]> {
+    return this.catRepository.getAllCats();
   }
 
   async upvoteCat(catId: string): Promise<ICat | null> {
