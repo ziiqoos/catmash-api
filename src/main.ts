@@ -10,6 +10,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/cats', catRoutes);
 
+app.get('/', (req, res) => {
+  res.send({ message: 'Hello Katty!' });
+});
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to catmash-api!' });
@@ -19,8 +22,7 @@ app.get('/api', (req, res) => {
 // Launch the app on designated port
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-  logger.info('Application start');
+  logger.info(`Application start at port ${port}`);
 });
 
 // Log the server errors

@@ -12,14 +12,16 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 app.use('/api/cats', cat_routes_1.default);
+app.get('/', (req, res) => {
+    res.send({ message: 'Hello Katty!' });
+});
 app.get('/api', (req, res) => {
     res.send({ message: 'Welcome to catmash-api!' });
 });
 // Launch the app on designated port
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}/api`);
-    logger_1.logger.info('Application start');
+    logger_1.logger.info(`Application start at port ${port}`);
 });
 // Log the server errors
 server.on('error', (error) => {
