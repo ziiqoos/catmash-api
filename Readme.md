@@ -27,7 +27,7 @@ The app features are:
 
 3. Run the Application : 
 
-       ng run start
+       npm run start
 
 4. Open the app using the link : 
 
